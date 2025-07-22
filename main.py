@@ -62,6 +62,19 @@ class AlphaBetaButton(discord.ui.View):
         command = self.bot.get_command("alphabeta")
         await command.invoke(ctx)
 
+class MoveOrderingButton(discord.ui.View):
+    def __init__(self, bot):
+        super().__init__(timeout=None)
+        self.bot = bot
+
+    @discord.ui.button(label="Optimize Alpha-Beta pruning", style=discord.ButtonStyle.success)
+    async def go_to_moveordering(self, interaction: discord.Interaction, button: discord.ui.Button):
+        # Create a fake context from interaction
+        ctx = await self.bot.get_context(interaction.message)
+        ctx.interaction = interaction  # optional
+
+        command = self.bot.get_command("moveordering")
+        await command.invoke(ctx)
 
 @bot.event
 async def on_message(message):
@@ -116,8 +129,11 @@ async def minimax(ctx):
 
 @bot.command(name="alphabeta")
 async def alphabeta(ctx):
-    await ctx.send("You can read about the explanation of alpha-beta pruning here: https://docs.google.com/document/d/1ePVT1ep_WX5m-qG2-5rRW_PvSVsZXlqix-fE7Z3frRE/edit?usp=sharing")
+    await ctx.send("You can read about the explanation of alpha-beta pruning here: https://docs.google.com/document/d/1ePVT1ep_WX5m-qG2-5rRW_PvSVsZXlqix-fE7Z3frRE/edit?usp=sharing", view=MoveOrderingButton(ctx.bot))
 
+@bot.command(name="moveordering")
+async def moveordering(ctx):
+    await ctx.send("Have a headache here: https://docs.google.com/document/d/1e-Q-mv8ctG9rGn-806Jfb4u9p3K8iAJiCbGEL7vjHkk/edit?usp=sharing")
 
 token = os.getenv("BOT_TOKEN")
 bot.run(token)
