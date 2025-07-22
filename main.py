@@ -4,7 +4,8 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-bot = commands.Bot(command_prefix=">", intents=discord.Intents.default())
+
+bot = commands.Bot(command_prefix="wiki", intents=discord.Intents.default())
 
 class BoardRepresentationButton(discord.ui.View):
     def __init__(self, bot):
