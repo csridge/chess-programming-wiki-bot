@@ -4,8 +4,9 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-
-bot = commands.Bot(command_prefix="'", intents=discord.Intents.default())
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix="'", intents=intents)
 
 class BoardRepresentationButton(discord.ui.View):
     def __init__(self, bot):
