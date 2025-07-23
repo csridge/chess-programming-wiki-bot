@@ -88,6 +88,8 @@ There will be code examples for each part, so don't worry if you don't understan
 Note that this is written in Python, but the concept is kinda the same. Install the newest Python version at https://www.python.org/downloads/release/python-3135/
 Use `>gettingstarted` to get started.""")
         
+    await bot.process_commands(message)
+        
 @bot.command(name="gettingstarted", help="Getting started with writing a chess engine")
 async def gettingstarted(ctx):
     await ctx.send("""
