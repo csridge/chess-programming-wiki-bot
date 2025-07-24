@@ -151,11 +151,11 @@ async def alphabeta(ctx):
 
 @bot.command(name="moveordering")
 async def moveordering(ctx):
-    await ctx.send("Have a headache here: https://docs.google.com/document/d/1e-Q-mv8ctG9rGn-806Jfb4u9p3K8iAJiCbGEL7vjHkk/edit?usp=sharing")
+    await ctx.send("Have a headache here: https://docs.google.com/document/d/1e-Q-mv8ctG9rGn-806Jfb4u9p3K8iAJiCbGEL7vjHkk/edit?usp=sharing", view=TranspositionTableButton(ctx.bot))
 
 @bot.command(name="transpositiontable")
 async def transpositiontable(ctx):
-    await ctx.send("Read about transposition tables here: https://docs.google.com/document/d/1eI1TK_9bX9VKk6ss9tGDD4LfmJB3vmOVRRYV2FjijAY/edit?usp=sharing", view=TranspositionTableButton(ctx.bot))
+    await ctx.send("Read about transposition tables here: https://docs.google.com/document/d/1eI1TK_9bX9VKk6ss9tGDD4LfmJB3vmOVRRYV2FjijAY/edit?usp=sharing")
 
 token = os.getenv("BOT_TOKEN")
 if token:
