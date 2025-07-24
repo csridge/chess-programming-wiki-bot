@@ -6,7 +6,8 @@ load_dotenv()
 
 intents = discord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(command_prefix="'", intents=intents)
+prefix = "'"
+bot = commands.Bot(command_prefix=prefix, intents=intents)
 
 class BoardRepresentationButton(discord.ui.View):
     def __init__(self, bot):
@@ -77,16 +78,29 @@ class MoveOrderingButton(discord.ui.View):
 
         command = self.bot.get_command("moveordering")
         await command.invoke(ctx)
+class TranspositionTableButton(discord.ui.View):
+    def __init__(self, bot):
+        super().__init__(timeout=None)
+        self.bot = bot
+
+    @discord.ui.button(label="Save even more searching time?", style=discord.ButtonStyle.success)
+    async def go_to_transpositiontable(self, interaction: discord.Interaction, button: discord.ui.Button):
+        # Create a fake context from interaction
+        ctx = await self.bot.get_context(interaction.message)
+        ctx.interaction = interaction  # optional
+
+        command = self.bot.get_command("transpositiontable")
+        await command.invoke(ctx)
 
 @bot.event
 async def on_message(message):
     if "<@1397151250340122634>" in message.content:
-        await message.channel.send("""
+        await message.channel.send(f"""
 This is a wiki to help you get started with writing your own chess engine. Topics will be divided into commands. I also recommended what to read next after each article.
 There will be code examples for each part, so don't worry if you don't understand how to implement it in your engine. (but i know what are you gonna do heheheheh)
 
 Note that this is written in Python, but the concept is kinda the same. Install the newest Python version at https://www.python.org/downloads/release/python-3135/
-Use `>gettingstarted` to get started.""")
+Use `{prefix}gettingstarted` to get started.""")
         
     await bot.process_commands(message)
         
@@ -139,5 +153,10 @@ async def alphabeta(ctx):
 async def moveordering(ctx):
     await ctx.send("Have a headache here: https://docs.google.com/document/d/1e-Q-mv8ctG9rGn-806Jfb4u9p3K8iAJiCbGEL7vjHkk/edit?usp=sharing")
 
+@bot.command(name="transpositiontable")
+async def transpositiontable(ctx):
+    await ctx.send("Read about transposition tables here: https://docs.google.com/document/d/1eI1TK_9bX9VKk6ss9tGDD4LfmJB3vmOVRRYV2FjijAY/edit?usp=sharing", view=TranspositionTableButton(ctx.bot))
+
 token = os.getenv("BOT_TOKEN")
-bot.run(token)
+if token:
+    bot.run(token)
